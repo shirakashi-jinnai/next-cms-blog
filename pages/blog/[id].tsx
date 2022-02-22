@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { GetStaticPaths } from 'next'
 
 export default function BlogContent({ data }) {
-  const { title, body, publishedAt } = data
+  const { title, body, publishedAt, category } = data
   return (
     <div>
       <Head>
@@ -17,6 +17,7 @@ export default function BlogContent({ data }) {
           __html: `${body}`,
         }}
       />
+      <p>{category}</p>
     </div>
   )
 }
