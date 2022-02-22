@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { client } from './../libs/client'
 
 export default function Home({ contents }) {
-  console.log(contents)
   return (
     <>
       <h1>blog</h1>
