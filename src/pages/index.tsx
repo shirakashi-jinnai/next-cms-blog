@@ -1,26 +1,41 @@
+import {
+  Divider,
+  Grid,
+  Link,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
+import NextLink from 'next/link'
+import Layout from '../components/Layout'
 import { client } from '../libs/client'
 
-export default function Home({ contents }) {
+export default function Home({ blog, categories }) {
   return (
-    <>
-      <h1>blog</h1>
-      {contents.map((content, i) => (
-        <li key={i}>
-          <Link href={`/blog/${content.id}`}>
-            <a>{content.title}</a>
-          </Link>
-        </li>
-      ))}
-    </>
+    <Layout description="ホーム" categories={categories}>
+      <Typography variant="h4" component={'h1'}>
+        記事一覧
+      </Typography>
+      <List>
+        {blog.map((content) => (
+          <ListItem key={content.id}>
+            <NextLink href={`/blog/${content.id}`}>
+              <a>{content.title}</a>
+            </NextLink>
+          </ListItem>
+        ))}
+      </List>
+    </Layout>
   )
 }
 
 export const getStaticProps = async () => {
-  const { contents } = await client.get({ endpoint: 'blog' })
+  const data = await client.get({ endpoint: 'blog' })
+  const categoryData = await client.get({ endpoint: 'categories' })
   return {
-    props: { contents },
+    props: { blog: data.contents, categories: categoryData.contents },
   }
 }

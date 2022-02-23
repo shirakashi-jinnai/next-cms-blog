@@ -1,10 +1,62 @@
+import {
+  Container,
+  Grid,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+} from '@mui/material'
 import Head from 'next/head'
-export default function Layout(props) {
+import { client } from '../libs/client'
+import NextLink from 'next/link'
+
+type Layout = {
+  title?: string
+  description?: string
+  children: any
+  categories: any
+}
+export default function Layout({
+  title = 'Memo-Blog',
+  children,
+  description,
+  categories,
+}: Layout) {
   return (
     <>
       <Head>
-        <title></title>
+        <title>{title}</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        {description && <meta name="description" content={description} />}
       </Head>
+      <Container maxWidth="lg">
+        <h1>blog</h1>
+        <Grid container spacing={2}>
+          <Grid item md={10}>
+            {children}
+          </Grid>
+          <Grid item md={2}>
+            <Typography>カテゴリー</Typography>
+
+            <List>
+              {categories.map((category) => (
+                <div key={category.id}>
+                  <NextLink href={`/category/${category.id}`} passHref>
+                    <ListItem key={category.id} component="a">
+                      <ListItemText>{category.name}</ListItemText>
+                    </ListItem>
+                  </NextLink>
+                  <Divider />
+                </div>
+              ))}
+            </List>
+
+            <Typography>タグ</Typography>
+            <Typography>人気の記事</Typography>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   )
 }

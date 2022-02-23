@@ -2,14 +2,12 @@ import React from 'react'
 import { client } from '../../libs/client'
 import Head from 'next/head'
 import { GetStaticPaths } from 'next'
+import Layout from '../../components/Layout'
 
-export default function BlogContent({ data }) {
+export default function BlogContent({ data, categories }) {
   const { title, body, publishedAt, category } = data
   return (
-    <div>
-      <Head>
-        <title>{title}</title>
-      </Head>
+    <Layout title={title} categories={categories}>
       <h1>{title}</h1>
       <p>{publishedAt}</p>
       <div
@@ -18,7 +16,7 @@ export default function BlogContent({ data }) {
         }}
       />
       {category && <p>{category.name}</p>}
-    </div>
+    </Layout>
   )
 }
 
@@ -37,8 +35,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async (ctx) => {
   const { id } = ctx.params
   const data = await client.get({ endpoint: 'blog', contentId: id })
+  const categoryData = await client.get({ endpoint: 'categories' })
 
   return {
-    props: { data },
+    props: { data, categories: categoryData.contents },
   }
 }
