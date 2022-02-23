@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
 import Link from 'next/link'
-import { client } from './../libs/client'
+import { client } from '../libs/client'
 
 export default function Home({ contents }) {
   return (
