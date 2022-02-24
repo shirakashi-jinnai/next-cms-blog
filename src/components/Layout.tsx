@@ -10,6 +10,7 @@ import {
 import Head from 'next/head'
 import { client } from '../libs/client'
 import NextLink from 'next/link'
+import Header from './Header'
 
 type Layout = {
   title?: string
@@ -30,8 +31,8 @@ export default function Layout({
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         {description && <meta name="description" content={description} />}
       </Head>
-      <Container maxWidth="lg">
-        <h1>blog</h1>
+      <Header />
+      <Container maxWidth="lg" style={{ marginTop: 100 }}>
         <Grid container spacing={5}>
           <Grid item md={9}>
             {children}
