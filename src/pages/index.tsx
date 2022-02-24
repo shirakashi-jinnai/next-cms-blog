@@ -10,6 +10,7 @@ import {
 import Head from 'next/head'
 import Image from 'next/image'
 import NextLink from 'next/link'
+import BlogCard from '../components/BlogCard'
 import Layout from '../components/Layout'
 import { client } from '../libs/client'
 
@@ -19,15 +20,9 @@ export default function Home({ blog, categories }) {
       <Typography variant="h4" component={'h1'}>
         記事一覧
       </Typography>
-      <List>
-        {blog.map((content) => (
-          <ListItem key={content.id}>
-            <NextLink href={`/blog/${content.id}`}>
-              <a>{content.title}</a>
-            </NextLink>
-          </ListItem>
-        ))}
-      </List>
+      {blog.map((content) => (
+        <BlogCard content={content} />
+      ))}
     </Layout>
   )
 }

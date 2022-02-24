@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   blogCard: {
     marginBottom: '20px',
     display: 'flex',
-    cursor: 'pointer',
+    textDecoration: 'none',
   },
 
   chipPointer: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 export default function BlogCard({ content }) {
   const classes = useStyles()
   return (
-    <NextLink href={`/blog/${content.id}`}>
+    <NextLink href={`/blog/${content.id}`} passHref>
       <Card className={classes.blogCard} component="a">
         <Image
           src={content.thumbnail ? content.thumbnail.url : noImage}
