@@ -1,8 +1,15 @@
-import { Card, CardContent } from '@mui/material'
 import _ from 'lodash'
-import React from 'react'
+import React, { Component } from 'react'
+import NextLink from 'next/link'
+import Image from 'next/image'
 import Layout from '../../components/Layout'
+import { Card, CardContent, Typography } from '@mui/material'
 import { client } from '../../libs/client'
+import noImage from '../../Img/noImage.jpg'
+import { Box } from '@mui/system'
+import StyleIcon from '@mui/icons-material/Style'
+import { makeStyles } from '@mui/styles'
+import BlogCard from '../../components/BlogCard'
 
 export default function CategoryId({ blog, categories }) {
   console.log(blog)
@@ -11,11 +18,7 @@ export default function CategoryId({ blog, categories }) {
       {_.isEmpty(blog) ? (
         <p>ページが見つかりませんでした。</p>
       ) : (
-        blog.map((content) => (
-          <Card key={content.id}>
-            <CardContent></CardContent>
-          </Card>
-        ))
+        blog.map((content) => <BlogCard content={content} key={content.id} />)
       )}
     </Layout>
   )

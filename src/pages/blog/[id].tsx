@@ -6,6 +6,7 @@ import Layout from '../../components/Layout'
 
 export default function BlogContent({ data, categories }) {
   const { title, body, publishedAt, category } = data
+  console.log(data)
   return (
     <Layout title={title} categories={categories}>
       <h1>{title}</h1>

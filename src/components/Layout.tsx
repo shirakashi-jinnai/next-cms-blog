@@ -32,11 +32,11 @@ export default function Layout({
       </Head>
       <Container maxWidth="lg">
         <h1>blog</h1>
-        <Grid container spacing={2}>
-          <Grid item md={10}>
+        <Grid container spacing={5}>
+          <Grid item md={9}>
             {children}
           </Grid>
-          <Grid item md={2}>
+          <Grid item md={3}>
             <Typography>カテゴリー</Typography>
 
             <List>
