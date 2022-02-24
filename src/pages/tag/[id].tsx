@@ -1,17 +1,10 @@
 import _ from 'lodash'
-import React, { Component } from 'react'
-import NextLink from 'next/link'
-import Image from 'next/image'
-import Layout from '../../components/Layout'
-import { Card, CardContent, Typography } from '@mui/material'
-import { client } from '../../libs/client'
-import noImage from '../../Img/noImage.jpg'
-import { Box } from '@mui/system'
-import StyleIcon from '@mui/icons-material/Style'
-import { makeStyles } from '@mui/styles'
+import React from 'react'
 import BlogCard from '../../components/BlogCard'
+import Layout from '../../components/Layout'
+import { client } from '../../libs/client'
 
-export default function CategoryId({ blog, categories, tags }) {
+export default function tagContent({ blog, categories, tags }) {
   console.log(blog)
   return (
     <Layout categories={categories} tags={tags}>
@@ -25,25 +18,19 @@ export default function CategoryId({ blog, categories, tags }) {
 }
 
 export const getStaticPaths = async () => {
-  const data = await client.get({ endpoint: 'categories' })
-  const paths = data.contents.map((content) => `/category/${content.id}`)
-
-  return {
-    paths,
-    fallback: false,
-  }
+  const tagData = await client.get({ endpoint: 'tags' })
+  const paths = tagData.contents.map((tag) => `/tag/${tag.id}`)
+  return { paths, fallback: false }
 }
 
 export const getStaticProps = async (ctx) => {
   const { id } = ctx.params
-  //categoryIDと同じ記事を抽出
   const data = await client.get({
     endpoint: 'blog',
-    queries: { filters: `category[equals]${id}` },
+    queries: { filters: `tags[contains]${id}` },
   })
-
-  const tagData = await client.get({ endpoint: 'tags' })
   const categoryData = await client.get({ endpoint: 'categories' })
+  const tagData = await client.get({ endpoint: 'tags' })
   return {
     props: {
       blog: data.contents,

@@ -14,14 +14,15 @@ import BlogCard from '../components/BlogCard'
 import Layout from '../components/Layout'
 import { client } from '../libs/client'
 
-export default function Home({ blog, categories }) {
+export default function Home({ blog, categories, tags }) {
+  console.log(tags)
   return (
-    <Layout description="ホーム" categories={categories}>
+    <Layout description="ホーム" categories={categories} tags={tags}>
       <Typography variant="h4" component={'h1'}>
         記事一覧
       </Typography>
       {blog.map((content) => (
-        <BlogCard content={content} />
+        <BlogCard key={content.id} content={content} />
       ))}
     </Layout>
   )
@@ -30,7 +31,12 @@ export default function Home({ blog, categories }) {
 export const getStaticProps = async () => {
   const data = await client.get({ endpoint: 'blog' })
   const categoryData = await client.get({ endpoint: 'categories' })
+  const tagData = await client.get({ endpoint: 'tags' })
   return {
-    props: { blog: data.contents, categories: categoryData.contents },
+    props: {
+      blog: data.contents,
+      categories: categoryData.contents,
+      tags: tagData.contents,
+    },
   }
 }
