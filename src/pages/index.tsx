@@ -10,12 +10,12 @@ import {
 import Head from 'next/head'
 import Image from 'next/image'
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import BlogCard from '../components/BlogCard'
 import Layout from '../components/Layout'
 import { client } from '../libs/client'
 
 export default function Home({ blog, categories, tags }) {
-  console.log(tags)
   return (
     <Layout description="ホーム" categories={categories} tags={tags}>
       <Typography variant="h4" component={'h1'}>

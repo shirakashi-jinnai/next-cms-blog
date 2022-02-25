@@ -5,7 +5,6 @@ import Layout from '../../components/Layout'
 import { client } from '../../libs/client'
 
 export default function tagContent({ blog, categories, tags }) {
-  console.log(blog)
   return (
     <Layout categories={categories} tags={tags}>
       {_.isEmpty(blog) ? (

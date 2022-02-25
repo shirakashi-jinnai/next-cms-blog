@@ -12,7 +12,6 @@ import { makeStyles } from '@mui/styles'
 import BlogCard from '../../components/BlogCard'
 
 export default function CategoryId({ blog, categories, tags }) {
-  console.log(blog)
   return (
     <Layout categories={categories} tags={tags}>
       {_.isEmpty(blog) ? (

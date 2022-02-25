@@ -17,6 +17,9 @@ const useStyles = makeStyles({
   chipPointer: {
     cursor: 'pointer',
   },
+  imgStyle: {
+    objectFit: 'cover',
+  },
 })
 
 export default function BlogCard({ content }) {
@@ -25,9 +28,10 @@ export default function BlogCard({ content }) {
     <NextLink href={`/blog/${content.id}`} passHref>
       <Card className={classes.blogCard} component="a">
         <Image
+          className={classes.imgStyle}
           src={content.thumbnail ? content.thumbnail.url : noImage}
           alt="サムネイル画像"
-          width={250}
+          width={300}
           height={250}
         />
 

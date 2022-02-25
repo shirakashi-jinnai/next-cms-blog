@@ -1,12 +1,10 @@
 import React from 'react'
 import { client } from '../../libs/client'
-import Head from 'next/head'
 import { GetStaticPaths } from 'next'
 import Layout from '../../components/Layout'
 
 export default function BlogContent({ data, categories, tags }) {
   const { title, body, publishedAt, category } = data
-  console.log(data)
   return (
     <Layout title={title} categories={categories} tags={tags}>
       <h1>{title}</h1>
