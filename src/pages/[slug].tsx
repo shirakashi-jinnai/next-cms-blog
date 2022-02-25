@@ -2,12 +2,11 @@ import { GetStaticPaths } from 'next'
 import { client } from '../libs/client'
 import Layout from '../components/Layout'
 
-export default function slugPage({ content, categories, tags }) {
-  const { title, publishedAt, body, category } = content
-
+export default function previewPage({ content, categories, tags }) {
   if (!content) {
     return <>下書きが見つかりませんでした。</>
   }
+  const { title, publishedAt, body, category } = content
 
   return (
     <Layout categories={categories} tags={tags}>
@@ -40,12 +39,16 @@ export const getStaticProps = async (ctx) => {
   const draftKey = ctx.previewData?.draftKey
   const categoryData = await client.get({ endpoint: 'categories' })
   const tagData = await client.get({ endpoint: 'tags' })
-  const content = await fetch(
-    `https://hobby-blog.microcms.io/api/v1/blog/${slug}${
-      draftKey !== undefined ? `?draftKey=${draftKey}` : ''
-    }`,
-    { headers: { 'X-MICROCMS-API-KEY': process.env.API_KEY || '' } },
-  ).then((res) => res.json())
+
+  const content =
+    slug !== 'undefined'
+      ? await fetch(
+          `https://hobby-blog.microcms.io/api/v1/blog/${slug}${
+            draftKey !== undefined ? `?draftKey=${draftKey}` : ''
+          }`,
+          { headers: { 'X-MICROCMS-API-KEY': process.env.API_KEY || '' } },
+        ).then((res) => res.json())
+      : null
   return {
     props: {
       content,
