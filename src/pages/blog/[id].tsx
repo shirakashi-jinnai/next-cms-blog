@@ -1,14 +1,58 @@
 import React from 'react'
+import NextLink from 'next/link'
 import { client } from '../../libs/client'
 import { GetStaticPaths } from 'next'
 import Layout from '../../components/Layout'
+import { DateTime } from 'luxon'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import Image from 'next/image'
+import { makeStyles } from '@mui/styles'
+import { Chip } from '@mui/material'
+import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import noImage from '../../Img/noImage.svg'
 
-export default function BlogContent({ data, categories, tags }) {
-  const { title, body, publishedAt, category } = data
+const useStyles = makeStyles((theme) => ({
+  imgStyle: {
+    objectFit: 'cover',
+  },
+}))
+
+export default function BlogContent({ data, categories, tagData }) {
+  const classes = useStyles()
+  const { title, body, publishedAt, category, tags, thumbnail } = data
+
+  const { year, month, day } = DateTime.fromISO(publishedAt)
   return (
-    <Layout title={title} categories={categories} tags={tags}>
+    <Layout title={title} categories={categories} tags={tagData}>
+      <Image
+        src={thumbnail ? thumbnail.url : noImage}
+        alt="サムネイル画像"
+        width={1000}
+        height={500}
+        className={classes.imgStyle}
+      />
       <h1>{title}</h1>
-      <p>{publishedAt}</p>
+      <div>
+        <NextLink href={`/category/${category.id}`}>
+          <Chip label={category.name} color="primary" component="a" />
+        </NextLink>
+        {tags.map((tag) => (
+          <NextLink href={`/tag/${tag.id}`}>
+            <Chip
+              key={tag.id}
+              icon={<LocalOfferIcon />}
+              label={tag.tag}
+              component="a"
+            />
+          </NextLink>
+        ))}
+      </div>
+      <p style={{ display: 'flex' }}>
+        <div>
+          <AccessTimeIcon />
+        </div>
+        {year}/{month}/{day}
+      </p>
       <div
         dangerouslySetInnerHTML={{
           __html: `${body}`,
@@ -38,6 +82,10 @@ export const getStaticProps = async (ctx) => {
   const tagData = await client.get({ endpoint: 'tags' })
 
   return {
-    props: { data, categories: categoryData.contents, tags: tagData.contents },
+    props: {
+      data,
+      categories: categoryData.contents,
+      tagData: tagData.contents,
+    },
   }
 }

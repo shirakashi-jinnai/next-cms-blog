@@ -1,11 +1,13 @@
 import React from 'react'
+import { DateTime } from 'luxon'
 import { Card, CardContent, Chip, Typography } from '@mui/material'
 import Image from 'next/image'
 import { Box } from '@mui/system'
 import { makeStyles } from '@mui/styles'
 import NextLink from 'next/link'
-import noImage from '../Img/noImage.jpg'
+import noImage from '../Img/noImage.svg'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 const useStyles = makeStyles({
   blogCard: {
@@ -24,12 +26,14 @@ const useStyles = makeStyles({
 
 export default function BlogCard({ content }) {
   const classes = useStyles()
+  const { id, thumbnail, title, category, tags, publishedAt } = content
+  const { year, month, day } = DateTime.fromISO(publishedAt)
   return (
-    <NextLink href={`/blog/${content.id}`} passHref>
+    <NextLink href={`/blog/${id}`} passHref>
       <Card className={classes.blogCard} component="a">
         <Image
           className={classes.imgStyle}
-          src={content.thumbnail ? content.thumbnail.url : noImage}
+          src={thumbnail ? thumbnail.url : noImage}
           alt="サムネイル画像"
           width={300}
           height={250}
@@ -37,18 +41,18 @@ export default function BlogCard({ content }) {
 
         <CardContent style={{ width: '100%' }}>
           <Typography component="div" variant="h5">
-            {content.title}
+            {title}
           </Typography>
           <Box sx={{ display: 'flex' }}>
-            {content.category && (
+            {category && (
               <Chip
                 className={classes.chipPointer}
                 color="primary"
                 label={content.category.name}
               />
             )}
-            {content.tags &&
-              content.tags.map((tag) => (
+            {tags &&
+              tags.map((tag) => (
                 <Chip
                   className={classes.chipPointer}
                   key={tag.id}
@@ -57,6 +61,13 @@ export default function BlogCard({ content }) {
                 />
               ))}
           </Box>
+
+          <p style={{ display: 'flex' }}>
+            <div>
+              <AccessTimeIcon />
+            </div>
+            {year}/{month}/{day}
+          </p>
         </CardContent>
       </Card>
     </NextLink>
