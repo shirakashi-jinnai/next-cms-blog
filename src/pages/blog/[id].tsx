@@ -33,19 +33,22 @@ export default function BlogContent({ data, categories, tagData }) {
       />
       <h1>{title}</h1>
       <div>
-        <NextLink href={`/category/${category.id}`}>
-          <Chip label={category.name} color="primary" component="a" />
-        </NextLink>
-        {tags.map((tag) => (
-          <NextLink href={`/tag/${tag.id}`}>
-            <Chip
-              key={tag.id}
-              icon={<LocalOfferIcon />}
-              label={tag.tag}
-              component="a"
-            />
+        {category && (
+          <NextLink
+            key={category.id}
+            href={`/category/${category.id}`}
+            passHref
+          >
+            <Chip label={category.name} color="primary" component="a" />
           </NextLink>
-        ))}
+        )}
+
+        {tags &&
+          tags.map((tag) => (
+            <NextLink key={tag.id} href={`/tag/${tag.id}`} passHref>
+              <Chip icon={<LocalOfferIcon />} label={tag.tag} component="a" />
+            </NextLink>
+          ))}
       </div>
       <p style={{ display: 'flex' }}>
         <div>
