@@ -19,9 +19,7 @@ import { client } from '../libs/client'
 export default function Home({ blog, categories, tags }) {
   return (
     <Layout description="ホーム" categories={categories} tags={tags}>
-      <Typography variant="h6" component="h1">
-        記事一覧
-      </Typography>
+      <Typography component="h1">記事一覧</Typography>
       {blog.map((content) => (
         <BlogCard key={content.id} content={content} />
       ))}

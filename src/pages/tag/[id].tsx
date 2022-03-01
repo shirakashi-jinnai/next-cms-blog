@@ -5,21 +5,18 @@ import BlogCard from '../../components/BlogCard'
 import Layout from '../../components/Layout'
 import { client } from '../../libs/client'
 import NextLink from 'next/link'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
 export default function tagContent({ blog, categories, tags, searchedTag }) {
   return (
     <Layout categories={categories} tags={tags}>
       <div style={{ display: 'flex' }}>
         <NextLink href={'/'} passHref>
-          <Typography variant="h6" component="a">
-            記事一覧
-          </Typography>
+          <Typography component="a">記事一覧</Typography>
         </NextLink>
-
-        <NextLink href={`/`}>
-          <Typography variant="h6" component="h1">
-            ＞{searchedTag}
-          </Typography>
+        <ArrowForwardIosIcon fontSize="small" />
+        <NextLink href={`/tag/${searchedTag.id}`} passHref>
+          <Typography component="a">{searchedTag.tag}</Typography>
         </NextLink>
       </div>
 
@@ -52,7 +49,7 @@ export const getStaticProps = async (ctx) => {
       blog: data.contents,
       categories: categoryData.contents,
       tags: tagData.contents,
-      searchedTag: searchedTag.tag,
+      searchedTag,
     },
   }
 }

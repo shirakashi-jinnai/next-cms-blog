@@ -10,10 +10,25 @@ import { Box } from '@mui/system'
 import StyleIcon from '@mui/icons-material/Style'
 import { makeStyles } from '@mui/styles'
 import BlogCard from '../../components/BlogCard'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
-export default function CategoryId({ blog, categories, tags }) {
+export default function CategoryId({
+  blog,
+  categories,
+  tags,
+  searchedCategory,
+}) {
   return (
     <Layout categories={categories} tags={tags}>
+      <div style={{ display: 'flex' }}>
+        <NextLink href={'/'} passHref>
+          <Typography component="a">記事一覧</Typography>
+        </NextLink>
+        <ArrowForwardIosIcon fontSize="small" />
+        <NextLink href={`/category/${searchedCategory.id}`} passHref>
+          <Typography component="a">{searchedCategory.name}</Typography>
+        </NextLink>
+      </div>
       {_.isEmpty(blog) ? (
         <p>ページが見つかりませんでした。</p>
       ) : (
@@ -40,7 +55,10 @@ export const getStaticProps = async (ctx) => {
     endpoint: 'blog',
     queries: { filters: `category[equals]${id}` },
   })
-
+  const searchedCategory = await client.get({
+    endpoint: 'categories',
+    contentId: id,
+  })
   const tagData = await client.get({ endpoint: 'tags' })
   const categoryData = await client.get({ endpoint: 'categories' })
   return {
@@ -48,6 +66,7 @@ export const getStaticProps = async (ctx) => {
       blog: data.contents,
       categories: categoryData.contents,
       tags: tagData.contents,
+      searchedCategory,
     },
   }
 }
