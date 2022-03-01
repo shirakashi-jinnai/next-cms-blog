@@ -63,9 +63,7 @@ export default function BlogCard({ content }) {
           </Box>
 
           <p style={{ display: 'flex' }}>
-            <div>
-              <AccessTimeIcon />
-            </div>
+            <AccessTimeIcon />
             {year}/{month}/{day}
           </p>
         </CardContent>

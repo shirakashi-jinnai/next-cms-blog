@@ -7,12 +7,15 @@ import {
   Theme,
   alpha,
   InputBase,
+  TextField,
 } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import { Box } from '@mui/system'
 import SearchIcon from '@mui/icons-material/Search'
 import logo from '../Img/logo.png'
 import NextLink from 'next/link'
+import { useContext, useState } from 'react'
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme: Theme) => ({
   search: {
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
-    pointerEvents: 'none',
+    // pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -58,18 +61,27 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function Header() {
   const classes = useStyles()
+  const [queries, setQueries] = useState<string>('')
+  const router = useRouter()
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    if (queries === '') {
+      return
+    }
+    router.push(`/search?q=${queries}`)
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" color="inherit">
         <Toolbar>
-          {/* <Image src={logo} width={150} height={150} /> */}
           <NextLink href={'/'}>
             <Typography component="a" variant="h6" sx={{ cursor: 'pointer' }}>
               MEMO BLOG
             </Typography>
           </NextLink>
           <div style={{ flexGrow: 1 }} />
-          <div className={classes.search}>
+          <form className={classes.search} onSubmit={submitHandler}>
             <div className={classes.searchIconWrapper}>
               <SearchIcon />
             </div>
@@ -77,8 +89,9 @@ export default function Header() {
               className={classes.styledInputBase}
               placeholder="Search..."
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => setQueries(e.target.value)}
             />
-          </div>
+          </form>
         </Toolbar>
       </AppBar>
     </Box>
