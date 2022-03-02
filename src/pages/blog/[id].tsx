@@ -9,7 +9,6 @@ import Image from 'next/image'
 import { makeStyles } from '@mui/styles'
 import { Chip } from '@mui/material'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
-import noImage from '../../Img/noImage.svg'
 
 const useStyles = makeStyles((theme) => ({
   imgStyle: {
@@ -20,12 +19,13 @@ const useStyles = makeStyles((theme) => ({
 export default function BlogContent({ data, categories, tagData }) {
   const classes = useStyles()
   const { title, body, publishedAt, category, tags, thumbnail } = data
+  const imgUrl = thumbnail ? thumbnail.url : '/noImage.svg'
 
   const { year, month, day } = DateTime.fromISO(publishedAt)
   return (
-    <Layout title={title} categories={categories} tags={tagData}>
+    <Layout title={title} categories={categories} tags={tagData} image={imgUrl}>
       <Image
-        src={thumbnail ? thumbnail.url : noImage}
+        src={imgUrl}
         alt="サムネイル画像"
         width={1000}
         height={562}

@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 type Layout = {
   title?: string
   description?: string
+  image?: any
   children: any
   categories: any[]
   tags: any[]
@@ -39,6 +40,7 @@ export default function Layout({
   title = 'Memo-Blog',
   children,
   description,
+  image,
   categories,
   tags,
 }: Layout) {
@@ -47,8 +49,12 @@ export default function Layout({
     <>
       <Head>
         <title>{title}</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1"
+        />
         {description && <meta name="description" content={description} />}
+        {image && <meta property="og:image" content={image} />}
       </Head>
       <Header />
       <Container maxWidth="lg" style={{ marginTop: 100 }}>

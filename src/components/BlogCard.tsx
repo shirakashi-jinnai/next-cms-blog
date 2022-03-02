@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { Box, Theme } from '@mui/system'
 import { makeStyles } from '@mui/styles'
 import NextLink from 'next/link'
-import noImage from '../Img/noImage.svg'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
@@ -32,7 +31,7 @@ export default function BlogCard({ content }) {
     <NextLink href={`/blog/${id}`} passHref>
       <Card className={classes.blogCard} component="a">
         <Image
-          src={thumbnail ? thumbnail.url : noImage}
+          src={thumbnail ? thumbnail.url : '/noImage.svg'}
           alt="サムネイル画像"
           objectFit="contain"
           width={300}

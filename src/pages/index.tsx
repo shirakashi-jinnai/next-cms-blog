@@ -1,24 +1,16 @@
-import {
-  Divider,
-  Grid,
-  Link,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from '@mui/material'
-import Head from 'next/head'
-import Image from 'next/image'
-import NextLink from 'next/link'
-import { useRouter } from 'next/router'
-import { useContext } from 'react'
+import { Typography } from '@mui/material'
 import BlogCard from '../components/BlogCard'
 import Layout from '../components/Layout'
 import { client } from '../libs/client'
 
 export default function Home({ blog, categories, tags }) {
   return (
-    <Layout description="ホーム" categories={categories} tags={tags}>
+    <Layout
+      description="普段の学習メモとして様々な記事を投稿しております。主にフロントエンド寄りの投稿をしています。"
+      categories={categories}
+      tags={tags}
+      image="/logo.png"
+    >
       <Typography component="h1">記事一覧</Typography>
       {blog.map((content) => (
         <BlogCard key={content.id} content={content} />
