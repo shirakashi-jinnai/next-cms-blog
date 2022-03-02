@@ -9,7 +9,6 @@ export default function Home({ blog, categories, tags }) {
       description="普段の学習メモとして様々な記事を投稿しております。主にフロントエンド寄りの投稿をしています。"
       categories={categories}
       tags={tags}
-      image="/logo.png"
     >
       <Typography component="h1">記事一覧</Typography>
       {blog.map((content) => (

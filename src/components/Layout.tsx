@@ -40,7 +40,7 @@ export default function Layout({
   title = 'Memo-Blog',
   children,
   description,
-  image,
+  image = '/logo.png',
   categories,
   tags,
 }: Layout) {
@@ -54,7 +54,7 @@ export default function Layout({
           content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1"
         />
         {description && <meta name="description" content={description} />}
-        {image && <meta property="og:image" content={image} />}
+        <meta property="og:image" content={image} />
       </Head>
       <Header />
       <Container maxWidth="lg" style={{ marginTop: 100 }}>
