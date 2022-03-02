@@ -68,6 +68,7 @@ export default function Header() {
     if (queries === '') {
       return
     }
+    router.push(`/search?q=${queries}`)
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
