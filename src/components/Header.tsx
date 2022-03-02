@@ -86,7 +86,7 @@ export default function Header() {
             </div>
             <InputBase
               className={classes.styledInputBase}
-              placeholder="Search..."
+              placeholder="Search Title"
               inputProps={{ 'aria-label': 'search' }}
               onChange={(e) => setQueries(e.target.value)}
             />

@@ -43,7 +43,7 @@ export default function BlogCard({ content }) {
           <Typography component="div" variant="h5">
             {title}
           </Typography>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             {category && (
               <Chip
                 className={classes.chipPointer}
