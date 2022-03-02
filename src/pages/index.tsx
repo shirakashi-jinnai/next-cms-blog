@@ -3,12 +3,16 @@ import BlogCard from '../components/BlogCard'
 import Layout from '../components/Layout'
 import { client } from '../libs/client'
 
-export default function Home({ blog, categories, tags }) {
+export default function Home({
+  blog,
+  categories,
+  tagData,
+}: PageProps<BlogContent[]>) {
   return (
     <Layout
       description="普段の学習メモとして様々な記事を投稿しております。主にフロントエンド寄りの投稿をしています。"
       categories={categories}
-      tags={tags}
+      tags={tagData}
     >
       <Typography component="h1">記事一覧</Typography>
       {blog.map((content) => (
@@ -26,7 +30,7 @@ export const getStaticProps = async () => {
     props: {
       blog: data.contents,
       categories: categoryData.contents,
-      tags: tagData.contents,
+      tagData: tagData.contents,
     },
   }
 }

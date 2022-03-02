@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 type Layout = {
   title?: string
   description?: string
-  image?: any
+  image?: string
   children: any
-  categories: any[]
-  tags: any[]
+  categories: Category[]
+  tags: Tag[]
 }
 
 export default function Layout({

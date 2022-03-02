@@ -1,24 +1,24 @@
 import _ from 'lodash'
-import React, { Component } from 'react'
+import React from 'react'
 import NextLink from 'next/link'
-import Image from 'next/image'
 import Layout from '../../components/Layout'
-import { Card, CardContent, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { client } from '../../libs/client'
-import { Box } from '@mui/system'
-import StyleIcon from '@mui/icons-material/Style'
-import { makeStyles } from '@mui/styles'
 import BlogCard from '../../components/BlogCard'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+
+interface CategoryPageProps extends PageProps<BlogContent[]> {
+  searchedCategory: Category
+}
 
 export default function CategoryId({
   blog,
   categories,
-  tags,
+  tagData,
   searchedCategory,
-}) {
+}: CategoryPageProps) {
   return (
-    <Layout categories={categories} tags={tags}>
+    <Layout categories={categories} tags={tagData}>
       <div style={{ display: 'flex' }}>
         <NextLink href={'/'} passHref>
           <Typography component="a">記事一覧</Typography>
@@ -38,7 +38,9 @@ export default function CategoryId({
 }
 
 export const getStaticPaths = async () => {
-  const data = await client.get({ endpoint: 'categories' })
+  const data: Contents<Category> = await client.get({
+    endpoint: 'categories',
+  })
   const paths = data.contents.map((content) => `/category/${content.id}`)
 
   return {
@@ -50,21 +52,23 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (ctx) => {
   const { id } = ctx.params
   //categoryIDと同じ記事を抽出
-  const data = await client.get({
+  const data: Contents<BlogContent> = await client.get({
     endpoint: 'blog',
     queries: { filters: `category[equals]${id}` },
   })
-  const searchedCategory = await client.get({
+  const searchedCategory: Category = await client.get({
     endpoint: 'categories',
     contentId: id,
   })
-  const tagData = await client.get({ endpoint: 'tags' })
-  const categoryData = await client.get({ endpoint: 'categories' })
+  const tagData: Contents<Tag> = await client.get({ endpoint: 'tags' })
+  const categoryData: Contents<Category> = await client.get({
+    endpoint: 'categories',
+  })
   return {
     props: {
       blog: data.contents,
       categories: categoryData.contents,
-      tags: tagData.contents,
+      tagData: tagData.contents,
       searchedCategory,
     },
   }

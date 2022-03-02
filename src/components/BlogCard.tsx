@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-export default function BlogCard({ content }) {
+export default function BlogCard({ content }: { content: BlogContent }) {
   const classes = useStyles()
   const { id, thumbnail, title, category, tags, publishedAt } = content
   const { year, month, day } = DateTime.fromISO(publishedAt)

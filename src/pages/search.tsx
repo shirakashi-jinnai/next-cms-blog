@@ -4,10 +4,15 @@ import Layout from '../components/Layout'
 import { client } from '../libs/client'
 import BlogCard from '../components/BlogCard'
 import { Typography } from '@mui/material'
+import { GetServerSideProps } from 'next'
 
-export default function searchPage({ blog, categories, tags }) {
+export default function searchPage({
+  blog,
+  categories,
+  tagData,
+}: PageProps<BlogContent[]>) {
   return (
-    <Layout categories={categories} tags={tags}>
+    <Layout categories={categories} tags={tagData}>
       <Typography variant="h6" component="h1">
         検索結果
       </Typography>
@@ -20,19 +25,21 @@ export default function searchPage({ blog, categories, tags }) {
   )
 }
 
-export const getServerSideProps = async (ctx) => {
-  const { q } = ctx.query
-  const data = await client.get({
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { q }: any = ctx.query
+  const data: Contents<BlogContent> = await client.get({
     endpoint: 'blog',
     queries: { filters: `title[contains]${q}` },
   })
-  const categoryData = await client.get({ endpoint: 'categories' })
-  const tagData = await client.get({ endpoint: 'tags' })
+  const categoryData: Contents<Category> = await client.get({
+    endpoint: 'categories',
+  })
+  const tagData: Contents<Tag> = await client.get({ endpoint: 'tags' })
   return {
     props: {
       blog: data.contents,
       categories: categoryData.contents,
-      tags: tagData.contents,
+      tagData: tagData.contents,
     },
   }
 }

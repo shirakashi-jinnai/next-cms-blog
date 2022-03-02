@@ -1,15 +1,19 @@
-import { GetStaticPaths } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { client } from '../libs/client'
 import Layout from '../components/Layout'
 
-export default function previewPage({ content, categories, tags }) {
-  if (!content) {
+export default function previewPage({
+  blog,
+  categories,
+  tagData,
+}: PageProps<BlogContent>) {
+  if (!blog) {
     return <>下書きが見つかりませんでした。</>
   }
-  const { title, publishedAt, body, category } = content
+  const { title, publishedAt, body, category } = blog
 
   return (
-    <Layout categories={categories} tags={tags}>
+    <Layout categories={categories} tags={tagData}>
       <h1>{title} 現在プレビュー中...</h1>
       <p>{publishedAt}</p>
       <div
@@ -35,12 +39,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps = async (ctx) => {
-  const slug = ctx.params?.slug
-  const draftKey = ctx.previewData?.draftKey
-  const categoryData = await client.get({ endpoint: 'categories' })
-  const tagData = await client.get({ endpoint: 'tags' })
+  const slug: string | undefined = ctx.params?.slug
+  const draftKey: string | undefined = ctx.previewData?.draftKey
+  const categoryData: Contents<Category> = await client.get({
+    endpoint: 'categories',
+  })
+  const tagData: Contents<Tag> = await client.get({ endpoint: 'tags' })
 
-  const content =
+  const blog =
     slug !== 'undefined'
       ? await fetch(
           `https://hobby-blog.microcms.io/api/v1/blog/${slug}${
@@ -51,8 +57,8 @@ export const getStaticProps = async (ctx) => {
       : null
   return {
     props: {
-      content,
-      tags: tagData.contents,
+      blog,
+      tagData: tagData.contents,
       categories: categoryData.contents,
     },
   }

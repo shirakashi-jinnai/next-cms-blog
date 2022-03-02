@@ -1,7 +1,7 @@
 import React from 'react'
 import NextLink from 'next/link'
 import { client } from '../../libs/client'
-import { GetStaticPaths } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Layout from '../../components/Layout'
 import { DateTime } from 'luxon'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
@@ -16,11 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function BlogContent({ data, categories, tagData }) {
+export default function BlogContent({
+  blog,
+  categories,
+  tagData,
+}: PageProps<BlogContent>) {
   const classes = useStyles()
-  const { title, body, publishedAt, category, tags, thumbnail } = data
+  const { title, body, publishedAt, category, tags, thumbnail } = blog
   const imgUrl = thumbnail ? thumbnail.url : '/noImage.svg'
-
   const { year, month, day } = DateTime.fromISO(publishedAt)
   return (
     <Layout title={title} categories={categories} tags={tagData} image={imgUrl}>
@@ -51,9 +54,7 @@ export default function BlogContent({ data, categories, tagData }) {
           ))}
       </div>
       <p style={{ display: 'flex' }}>
-        <div>
-          <AccessTimeIcon />
-        </div>
+        <AccessTimeIcon />
         {year}/{month}/{day}
       </p>
       <div
@@ -67,10 +68,10 @@ export default function BlogContent({ data, categories, tagData }) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await client.get({ endpoint: 'blog' })
+  const data: Contents<BlogContent> = await client.get({ endpoint: 'blog' })
   const paths: string[] = data.contents.map(
     //params:{id:content.id}でも可能
-    (content: any) => `/blog/${content.id}`,
+    (content) => `/blog/${content.id}`,
   )
   return {
     paths,
@@ -78,15 +79,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps = async (ctx) => {
-  const { id } = ctx.params
-  const data = await client.get({ endpoint: 'blog', contentId: id })
-  const categoryData = await client.get({ endpoint: 'categories' })
-  const tagData = await client.get({ endpoint: 'tags' })
+export const getStaticProps: GetStaticProps = async (ctx) => {
+  const { id }: any = ctx.params
+  const blog: BlogContent = await client.get({
+    endpoint: 'blog',
+    contentId: id,
+  })
+  const categoryData: Contents<Category> = await client.get({
+    endpoint: 'categories',
+  })
+  const tagData: Contents<Tag> = await client.get({ endpoint: 'tags' })
 
   return {
     props: {
-      data,
+      blog,
       categories: categoryData.contents,
       tagData: tagData.contents,
     },
