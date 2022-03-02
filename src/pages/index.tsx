@@ -23,9 +23,11 @@ export default function Home({
 }
 
 export const getStaticProps = async () => {
-  const data = await client.get({ endpoint: 'blog' })
-  const categoryData = await client.get({ endpoint: 'categories' })
-  const tagData = await client.get({ endpoint: 'tags' })
+  const data: Contents<BlogContent> = await client.get({ endpoint: 'blog' })
+  const categoryData: Contents<Category> = await client.get({
+    endpoint: 'categories',
+  })
+  const tagData: Contents<Tag> = await client.get({ endpoint: 'tags' })
   return {
     props: {
       blog: data.contents,
