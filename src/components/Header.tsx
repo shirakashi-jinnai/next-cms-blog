@@ -63,13 +63,11 @@ export default function Header() {
   const classes = useStyles()
   const [queries, setQueries] = useState<string>('')
   const router = useRouter()
-
   const submitHandler = (e) => {
     e.preventDefault()
     if (queries === '') {
       return
     }
-    router.push(`/search?q=${queries}`)
   }
   return (
     <Box sx={{ flexGrow: 1 }}>

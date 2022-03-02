@@ -53,10 +53,10 @@ export default function Layout({
       <Header />
       <Container maxWidth="lg" style={{ marginTop: 100 }}>
         <Grid container spacing={5}>
-          <Grid item md={9}>
+          <Grid item md={9} xs={12}>
             {children}
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={3} xs={12}>
             <div>
               <Typography variant="h6" className={classes.sideMenuText}>
                 カテゴリー
@@ -93,8 +93,6 @@ export default function Layout({
                 ))}
               </List>
             </div>
-
-            <Typography>人気の記事</Typography>
           </Grid>
         </Grid>
       </Container>

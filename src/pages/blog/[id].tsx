@@ -13,7 +13,7 @@ import noImage from '../../Img/noImage.svg'
 
 const useStyles = makeStyles((theme) => ({
   imgStyle: {
-    objectFit: 'cover',
+    objectFit: 'contain',
   },
 }))
 
@@ -28,7 +28,7 @@ export default function BlogContent({ data, categories, tagData }) {
         src={thumbnail ? thumbnail.url : noImage}
         alt="サムネイル画像"
         width={1000}
-        height={500}
+        height={562}
         className={classes.imgStyle}
       />
       <h1>{title}</h1>

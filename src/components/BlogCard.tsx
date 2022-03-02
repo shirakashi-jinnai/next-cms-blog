@@ -2,27 +2,27 @@ import React from 'react'
 import { DateTime } from 'luxon'
 import { Card, CardContent, Chip, Typography } from '@mui/material'
 import Image from 'next/image'
-import { Box } from '@mui/system'
+import { Box, Theme } from '@mui/system'
 import { makeStyles } from '@mui/styles'
 import NextLink from 'next/link'
 import noImage from '../Img/noImage.svg'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   blogCard: {
     marginBottom: '20px',
     display: 'flex',
     textDecoration: 'none',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
   },
 
   chipPointer: {
     cursor: 'pointer',
   },
-  imgStyle: {
-    objectFit: 'cover',
-  },
-})
+}))
 
 export default function BlogCard({ content }) {
   const classes = useStyles()
@@ -32,14 +32,14 @@ export default function BlogCard({ content }) {
     <NextLink href={`/blog/${id}`} passHref>
       <Card className={classes.blogCard} component="a">
         <Image
-          className={classes.imgStyle}
           src={thumbnail ? thumbnail.url : noImage}
           alt="サムネイル画像"
+          objectFit="contain"
           width={300}
-          height={250}
+          height={169}
         />
 
-        <CardContent style={{ width: '100%' }}>
+        <CardContent>
           <Typography component="div" variant="h5">
             {title}
           </Typography>
