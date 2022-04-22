@@ -50,11 +50,13 @@ const useStyles = makeStyles((theme: Theme) => ({
       background: '#1d1f21',
       borderRadius: 5,
       padding: 10,
-      '& $code': {
-        color: '#c5c8c6',
-        fontFamily: 'Source Code Pro',
-        background: '#1d1f21',
-      },
+    },
+    '& $code': {
+      color: '#c5c8c6',
+      fontFamily: 'Source Code Pro',
+      background: '#1d1f21',
+      padding: 5,
+      borderRadius: 5,
     },
   },
 

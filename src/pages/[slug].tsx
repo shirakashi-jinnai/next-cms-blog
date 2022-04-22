@@ -3,15 +3,16 @@ import { client } from '../libs/client'
 import Layout from '../components/Layout'
 import useStyles from '../styles/style'
 
-export default function previewPage({
+export default function PeviewPage({
   blog,
   categories,
   tagData,
 }: PageProps<BlogContent>) {
+  const classes = useStyles()
+
   if (!blog) {
     return <>下書きが見つかりませんでした。</>
   }
-  const classes = useStyles()
   const { title, publishedAt, body, category } = blog
 
   return (
