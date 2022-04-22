@@ -6,27 +6,9 @@ import Layout from '../../components/Layout'
 import { DateTime } from 'luxon'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Image from 'next/image'
-import { makeStyles } from '@mui/styles'
 import { Chip } from '@mui/material'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
-
-const useStyles = makeStyles((theme) => ({
-  imgStyle: {
-    objectFit: 'contain',
-  },
-  codeStyle: {
-    '& $pre': {
-      background: '#1d1f21',
-      borderRadius: 5,
-      padding: 10,
-      '& $code': {
-        color: '#c5c8c6',
-        fontFamily: 'Source Code Pro',
-        background: '#1d1f21',
-      },
-    },
-  },
-}))
+import useStyles from '../../styles/style'
 
 export default function BlogContent({
   blog,
@@ -75,7 +57,6 @@ export default function BlogContent({
           __html: `${body}`,
         }}
       />
-      {category && <p>{category.name}</p>}
     </Layout>
   )
 }

@@ -3,25 +3,10 @@ import { DateTime } from 'luxon'
 import { Card, CardContent, Chip, Typography } from '@mui/material'
 import Image from 'next/image'
 import { Box, Theme } from '@mui/system'
-import { makeStyles } from '@mui/styles'
 import NextLink from 'next/link'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
-
-const useStyles = makeStyles((theme: Theme) => ({
-  blogCard: {
-    marginBottom: '20px',
-    display: 'flex',
-    textDecoration: 'none',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-    },
-  },
-
-  chipPointer: {
-    cursor: 'pointer',
-  },
-}))
+import useStyles from '../styles/style'
 
 export default function BlogCard({ content }: { content: BlogContent }) {
   const classes = useStyles()

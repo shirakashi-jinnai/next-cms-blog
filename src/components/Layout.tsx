@@ -14,18 +14,8 @@ import { client } from '../libs/client'
 import NextLink from 'next/link'
 import Header from './Header'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
-import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/system'
-
-const useStyles = makeStyles((theme: Theme) => ({
-  sideMenu: {
-    margin: '10px 0',
-  },
-  sideMenuText: {
-    background: alpha(theme.palette.common.black, 0.05),
-    borderRadius: 5,
-  },
-}))
+import useStyles from '../styles/style'
 
 type Layout = {
   title?: string

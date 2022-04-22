@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { client } from '../libs/client'
 import Layout from '../components/Layout'
+import useStyles from '../styles/style'
 
 export default function previewPage({
   blog,
@@ -10,6 +11,7 @@ export default function previewPage({
   if (!blog) {
     return <>下書きが見つかりませんでした。</>
   }
+  const classes = useStyles()
   const { title, publishedAt, body, category } = blog
 
   return (
@@ -17,6 +19,7 @@ export default function previewPage({
       <h1>{title} 現在プレビュー中...</h1>
       <p>{publishedAt}</p>
       <div
+        className={classes.codeStyle}
         dangerouslySetInnerHTML={{
           __html: `${body}`,
         }}

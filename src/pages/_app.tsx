@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import theme from '../theme'
+import theme from '../styles/theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
