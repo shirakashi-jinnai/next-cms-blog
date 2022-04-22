@@ -16,12 +16,13 @@ const useStyles = makeStyles((theme) => ({
   },
   codeStyle: {
     '& $pre': {
-      color: '#c5c8c6',
       background: '#1d1f21',
       borderRadius: 5,
       padding: 10,
       '& $code': {
+        color: '#c5c8c6',
         fontFamily: 'Source Code Pro',
+        background: '#1d1f21',
       },
     },
   },
