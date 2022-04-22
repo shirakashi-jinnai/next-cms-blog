@@ -14,6 +14,17 @@ const useStyles = makeStyles((theme) => ({
   imgStyle: {
     objectFit: 'contain',
   },
+  codeStyle: {
+    '& $pre': {
+      color: '#c5c8c6',
+      background: '#1d1f21',
+      borderRadius: 5,
+      padding: 10,
+      '& $code': {
+        fontFamily: 'Source Code Pro',
+      },
+    },
+  },
 }))
 
 export default function BlogContent({
@@ -58,6 +69,7 @@ export default function BlogContent({
         {year}/{month}/{day}
       </p>
       <div
+        className={classes.codeStyle}
         dangerouslySetInnerHTML={{
           __html: `${body}`,
         }}

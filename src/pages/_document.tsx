@@ -22,6 +22,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,
             400,500,700&display=swap"
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
+            rel="stylesheet"
+          ></link>
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
         </Head>
         <body>
